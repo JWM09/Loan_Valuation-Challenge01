@@ -2,6 +2,8 @@
 import csv
 from pathlib import Path
 
+from sympy import re
+
 """Part 1: Automate the Calculations.
 
 Automate the calculations for the loan portfolio summaries.
@@ -70,6 +72,10 @@ loan = {
 # Print each variable.
 # YOUR CODE HERE!
 
+future_value = loan.get("future_value")
+remaining_months = loan.get("remaining_months")
+print(f"The loan has a future value of ${future_value: .2f}, and has {remaining_months} months left on the term.")
+
 
 # @TODO: Use the formula for Present Value to calculate a "fair value" of the loan.
 # Use a minimum required return of 20% as the discount rate.
@@ -77,12 +83,20 @@ loan = {
 #   HINT: Present Value = Future Value / (1 + Discount_Rate/12) ** remaining_months
 
 # YOUR CODE HERE!
+discount_rate = .20
+present_value = future_value / (1 + discount_rate/12) ** remaining_months
+print(f"The loan is currently worth ${present_value: .2f}")
 
 # If Present Value represents what the loan is really worth, does it make sense to buy the loan at its cost?
 # @TODO: Write a conditional statement (an if-else statement) to decide if the present value represents the loan's fair value.
 #    If the present value of the loan is greater than or equal to the cost, then print a message that says the loan is worth at least the cost to buy it.
 #    Else, the present value of the loan is less than the loan cost, then print a message that says that the loan is too expensive and not worth the price.
 # YOUR CODE HERE!
+loan_price = loan.get("loan_price")
+if present_value >= loan_price:
+    print(f"We should buy this loan.  It is worth ${present_value - loan_price: .2f} than the asking price.")
+else:
+    print(f"Walk away.  We will lose ${loan_price - present_value: .2f} on this deal.")
 
 
 """Part 3: Perform Financial Calculations.
