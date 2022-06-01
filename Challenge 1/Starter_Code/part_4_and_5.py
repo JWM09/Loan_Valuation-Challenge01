@@ -46,9 +46,8 @@ inexpensive_loans = []
 
 # @TODO: Loop through all the loans and append any that cost $500 or less to the `inexpensive_loans` list
 # YOUR CODE HERE!
-for item in loans:
-    loan = item["loan_price"]
-    if loan <= 500:
+for loan in loans:
+    if loan["loan_price"] <= 500:
         inexpensive_loans.append(loan)
 
 #how to i call the full dictionary entry into inexpensive loans
@@ -75,6 +74,12 @@ header = ["loan_price", "remaining_months", "repayment_interval", "future_value"
 
 # Set the output file path
 output_path = Path("inexpensive_loans.csv")
+
+with open(output_path, 'w') as csvfile:
+    csvwriter = csv.writer(csvfile, delimiter=",") 
+    csvwriter.writerow(header)
+    for loan in inexpensive_loans:
+        csvwriter.writerow(loan.values())
 
 # @TODO: Use the csv library and `csv.writer` to write the header row
 # and each row of `loan.values()` from the `inexpensive_loans` list.
